@@ -1,8 +1,7 @@
 <html>
 <head>
-	<script src="jquery.min.js"></script>
-	<script language="JavaScript" type="text/javascript" src="../../pixihama/js/jquery.min.js"></script>
-
+<script src="jquery.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="../../pixihama/js/jquery.min.js"></script>
 <script>
 
 $(window).load(function() {
@@ -116,14 +115,13 @@ $(window).load(function() {
         });
     });
 
-
-
 </script>
 </head>
+	
 <body>
 <canvas title="Canvas a cargar" id="minicanvas_preview" width="232" height="232" style="background-color:#E1E0E4"></canvas>
 <br><input name="file-input" class="enlace" id="file-input" type="file" accept="image/*" />
 <input type="checkbox" id="ajustar" checked >Ajustar<br>
-
 </body>
+	
 </html>
