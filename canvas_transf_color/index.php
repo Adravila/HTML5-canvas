@@ -119,7 +119,7 @@ $(window).load(function() {
 </head>
 	
 <body>
-<canvas title="Canvas a cargar" id="minicanvas_preview" width="232" height="232" style="background-color:#E1E0E4"></canvas>
+<canvas title="Canvas a cargar" id="minicanvas_preview" width="464" height="464" style="background-color:#E1E0E4"></canvas>
 <br><input name="file-input" class="enlace" id="file-input" type="file" accept="image/*" />
 <input type="checkbox" id="ajustar" checked >Ajustar<br>
 </body>
