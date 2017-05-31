@@ -1,5 +1,5 @@
 ## Transformar imagen en solo 56 colores
-Código que he utilizado para transformar una imagen de un determinado tamaño, en ese caso de 232x232.
+Código que he utilizado para transformar una imagen de un determinado tamaño, en ese caso de 464x464.
 - Una imagen por debajo del tamaño mínimo se podrá ajustar.
 - Sólo dispone de 56 colores establecidos por el programador.
 - El botón de ajustar no está funcionando correctamente en esta versión.
