@@ -1,7 +1,6 @@
 <html>
 <head>
 <script src="jquery.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="../../pixihama/js/jquery.min.js"></script>
 <script>
 
 $(window).load(function() {
