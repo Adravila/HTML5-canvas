@@ -1,0 +1,127 @@
+<html>
+
+<head>
+	<script src="jquery.min.js"></script>
+	<script>
+		$(window).load(function () {
+			$(function () {
+				$("#file-input").change(function (e) {
+					addImage(e);
+					// Limpiamos el input
+					/*e.target.files = [];
+								e.target.value = "";*/
+				});
+
+				function addImage(e) {
+					var file = e.target.files[0],
+						imageType = /image.*/;
+
+					if (!file.type.match(imageType)) return;
+
+					var reader = new FileReader();
+					reader.onload = function (e) {
+						fileOnload(e);
+					};
+					reader.readAsDataURL(file);
+				}
+
+				function fileOnload(e) {
+					var result = e.target.result;
+					var cty = minicanvas_preview.getContext("2d");
+
+					cty.shadowColor = "#E1E0E4";
+					cty.fillStyle = "#E1E0E4";
+					img = new Image();
+					play = false;
+					//ctx.mozImageSmoothingEnabled = false;
+					cty.imageSmoothingEnabled = false;
+					var ctnuevo = minicanvas_preview.getContext("2d");
+					ctnuevo.imageSmoothingEnabled = false;
+					img.src = result;
+					document.getElementById("imagen_original").innerHTML='<img src="'+img.src+'"/>';
+					img.onload = pixelate;
+					tam_canvas = 116;
+					tam_pixel = 29;
+					tam_resol = minicanvas_preview.width / tam_canvas;
+
+					function pixelate() {
+						cty.clearRect(0, 0, tam_canvas, tam_canvas);
+						cty.drawImage(img, 0, 0, tam_canvas, tam_canvas);
+						var imgData = cty.getImageData(0, 0, tam_canvas, tam_canvas);
+						var data = imgData.data;
+
+						// Pixelar imagen
+
+						// Transformar imagen
+						// Código de color de la paleta de colores de HAMA BEADS
+						//		   #0 #0-50 #50-100 #100-150 #150-200 #200-300 #300+
+						rgb_red = [0, 22, 255, 255, 244, 148, 126];
+						rgb_gre = [50, 230, 211, 107, 0, 0, 0];
+						rgb_blu = [200, 0, 0, 0, 0, 69, 035];
+						// Transformar imagen
+						for (var i = 0; i < data.length; i += 4) {
+							var m = 255,
+								red = 0,
+								gre = 0,
+								blu = 0,
+								red_ = 0,
+								gre_ = 0,
+								blu_ = 0,
+								x = 0,
+								y = 0,
+								filtro = 21;
+							if (data[i + 3] < 255) {
+								data[i] = 225;
+								data[i + 1] = 224;
+								data[i + 2] = 228;
+								data[i + 3] = 255;
+							} else {
+								for (var j = 0; j < rgb_red.length; j++) {
+									if (data[i] - rgb_red[j] > 0) red_ = data[i] - rgb_red[j];
+									else red_ = rgb_red[j] - data[i];
+									if (data[i + 1] - rgb_gre[j] > 0)
+										gre_ = data[i + 1] - rgb_gre[j];
+									else gre_ = rgb_gre[j] - data[i + 1];
+									if (data[i + 2] - rgb_blu[j] > 0)
+										blu_ = data[i + 2] - rgb_blu[j];
+									else blu_ = rgb_blu[j] - data[i + 2];
+									if (m >= red_ + blu_ + gre_ + filtro) {
+										m = red_ + blu_ + gre_;
+										red = rgb_red[j];
+										gre = rgb_gre[j];
+										blu = rgb_blu[j];
+									}
+								}
+								// Aquí ya tengo el color asignado
+								data[i] = red;
+								data[i + 1] = gre;
+								data[i + 2] = blu;
+							}
+						}
+						cty.putImageData(imgData, 0, 0);
+
+						delete img;
+						img = new Image();
+						ctnuevo.drawImage(
+							minicanvas_preview,
+							0,
+							0,
+							minicanvas_preview.width * tam_resol,
+							minicanvas_preview.height * tam_resol
+						);
+					}
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<canvas title="Canvas a cargar" id="minicanvas_preview" width="464px" height="464px"
+		style="background-color:#E1E0E4"></canvas>
+		<div id ="imagen_original" style="width:464px; height: 464px; position: absolute; left: 490; top:10"></div>
+
+	<br /><input name="file-input" class="enlace" id="file-input" type="file" accept="image/*" />
+</body>
+
+</html>
